@@ -3,6 +3,7 @@
  */
 
 package com.mycompany.projecttransportasi;
+import java.util.Scanner;
 
 /**
  *
@@ -12,38 +13,92 @@ package com.mycompany.projecttransportasi;
 // Kelas Transportasi sebagai superclass
 public class Transportasi {
     
-    // ATRIBUT
-    String jenis;  // Jenis kendaraan (Mobil, Motor, dll.)
-    int tahun;     // Tahun pembuatan kendaraan
-    double harga;  // Harga kendaraan dalam rupiah
-    
-    //Method untuk menampilkan informasi transportasi
-    void tampilkanInfo(){
-        System.out.println("===INFORMASI TRANSPORTASI===");
-        System.out.println("Jenis: " + jenis);
-        System.out.println("Tahun: " + tahun);
-        System.out.println("Harga Mobil: Rp " + harga);
-        System.out.println("------------------------------");
+     // Atribut transportasi
+    String jenisTransportasi; // Jenis kendaraan (Mobil, Motor, Bus)
+    String nomorPlat; // Nomor plat kendaraan
+    double hargaPerKm; // Harga per kilometer sesuai tarif asli
+
+    // Method untuk menghitung total biaya perjalanan berdasarkan jarak
+    double hitungHarga(double jarak) {
+        return hargaPerKm * jarak;
+    }
+
+    // Method untuk menampilkan informasi transportasi
+    void tampilkanDetail() {
+        System.out.println("Jenis Transportasi: " + jenisTransportasi);
+        System.out.println("Nomor Plat: " + nomorPlat);
+        System.out.println("Harga per Km: Rp" + hargaPerKm);
     }
     
     public static void main(String[] args) {
-        //Membuat object transportasi tanpa input 
-        Transportasi mobil1 = new Transportasi();
-        mobil1.jenis = "Toyota Supra MK4";
-        mobil1.tahun = 1995;
-        mobil1.harga = 2000000000;
-        
-        Transportasi mobil2 = new Transportasi();
-        mobil2.jenis = "Nissan GT-R R35";
-        mobil2.tahun = 2007;
-        mobil2.harga = 450000000;
-        
-        // Menampilkan informasi setiap mobil
-        mobil1.tampilkanInfo();
-        mobil2.tampilkanInfo();
-        
+        Scanner scanner = new Scanner(System.in);
+
+        // Membuat objek transportasi tanpa konstruktor
+        Transportasi mobil = new Transportasi();
+        mobil.jenisTransportasi = "Mobil";
+        mobil.nomorPlat = "B 1234 ABC";
+        mobil.hargaPerKm = 6500; // Tarif standar taksi per km
+
+        Transportasi motor = new Transportasi();
+        motor.jenisTransportasi = "Motor";
+        motor.nomorPlat = "D 5678 XYZ";
+        motor.hargaPerKm = 2500; // Tarif standar ojek online per km
+
+        Transportasi bus = new Transportasi();
+        bus.jenisTransportasi = "Bus";
+        bus.nomorPlat = "E 9101 DEF";
+        bus.hargaPerKm = 3500; // Tarif standar bus antar kota per km
+
+        // Menampilkan pilihan transportasi
+        System.out.println("=== Sistem Pemesanan Transportasi ===");
+        System.out.println("Pilih jenis transportasi:");
+        System.out.println("1. Mobil (Rp6500 per km - Taksi)");
+        System.out.println("2. Motor (Rp2500 per km - Ojek Online)");
+        System.out.println("3. Bus (Rp3500 per km - Bus Umum)");
+
+        // Input pilihan user
+        System.out.print("Masukkan pilihan (1-3): ");
+        int pilihan = scanner.nextInt();
+
+        // Deklarasi objek transportasi yang akan digunakan
+        Transportasi transportasi = null;
+
+        // Pemilihan transportasi berdasarkan input pengguna
+        if (pilihan == 1) {
+            transportasi = mobil;
+        } else if (pilihan == 2) {
+            transportasi = motor;
+        } else if (pilihan == 3) {
+            transportasi = bus;
+        } else {
+            System.out.println("Pilihan tidak valid!");
+            System.exit(0); // Keluar dari program jika input tidak valid
+        }
+
+        // Menampilkan detail kendaraan yang dipilih
+        System.out.println("\nDetail Transportasi Anda:");
+        transportasi.tampilkanDetail();
+
+        // Input jarak perjalanan
+        System.out.print("\nMasukkan jarak perjalanan (dalam km): ");
+        double jarak = scanner.nextDouble();
+
+        // Menghitung dan menampilkan total harga
+        double totalHarga = transportasi.hitungHarga(jarak);
+        System.out.println("Total Harga: Rp" + totalHarga);
+
+        // Konfirmasi pemesanan
+        System.out.print("\nKonfirmasi pemesanan? (ya/tidak): ");
+        String konfirmasi = scanner.next().toLowerCase();
+
+        // Menampilkan hasil berdasarkan konfirmasi user
+        if (konfirmasi.equals("ya")) {
+            System.out.println("\nPemesanan Berhasil! Selamat Menikmati Perjalanannya.");
+        } else {
+            System.out.println("\nPemesanan Dibatalkan.");
+        }
+
+        // Menutup scanner untuk mencegah kebocoran memori
+        scanner.close();
     }
 }
-    
-
-
