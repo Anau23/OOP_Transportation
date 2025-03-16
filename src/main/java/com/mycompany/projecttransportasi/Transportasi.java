@@ -17,7 +17,14 @@ public class Transportasi {
     String jenisTransportasi; // Jenis kendaraan (Mobil, Motor, Bus)
     String nomorPlat; // Nomor plat kendaraan
     double hargaPerKm; // Harga per kilometer sesuai tarif asli
-
+    
+    // Constructor untuk menginisialisasi atribut saat objek dibuat
+    public Transportasi(String jenis, String plat, double harga) {
+        this.jenisTransportasi = jenis;
+        this.nomorPlat = plat;
+        this.hargaPerKm = harga;
+    }
+    
     // Method untuk menghitung total biaya perjalanan berdasarkan jarak
     double hitungHarga(double jarak) {
         return hargaPerKm * jarak;
@@ -33,23 +40,7 @@ public class Transportasi {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Membuat objek transportasi tanpa konstruktor
-        Transportasi mobil = new Transportasi();
-        mobil.jenisTransportasi = "Mobil";
-        mobil.nomorPlat = "B 1234 ABC";
-        mobil.hargaPerKm = 6500; // Tarif standar taksi per km
-
-        Transportasi motor = new Transportasi();
-        motor.jenisTransportasi = "Motor";
-        motor.nomorPlat = "D 5678 XYZ";
-        motor.hargaPerKm = 2500; // Tarif standar ojek online per km
-
-        Transportasi bus = new Transportasi();
-        bus.jenisTransportasi = "Bus";
-        bus.nomorPlat = "E 9101 DEF";
-        bus.hargaPerKm = 3500; // Tarif standar bus antar kota per km
-
-        // Menampilkan pilihan transportasi
+       // Menampilkan pilihan transportasi
         System.out.println("=== Sistem Pemesanan Transportasi ===");
         System.out.println("Pilih jenis transportasi:");
         System.out.println("1. Mobil (Rp6500 per km - Taksi)");
@@ -60,19 +51,19 @@ public class Transportasi {
         System.out.print("Masukkan pilihan (1-3): ");
         int pilihan = scanner.nextInt();
 
-        // Deklarasi objek transportasi yang akan digunakan
+        // Deklarasi objek transportasi menggunakan konstruktor
         Transportasi transportasi = null;
 
-        // Pemilihan transportasi berdasarkan input pengguna
+        // Membuat objek sesuai pilihan pengguna
         if (pilihan == 1) {
-            transportasi = mobil;
+            transportasi = new Transportasi("Mobil", "B 1234 ABC", 6500);
         } else if (pilihan == 2) {
-            transportasi = motor;
+            transportasi = new Transportasi("Motor", "D 5678 XYZ", 2500);
         } else if (pilihan == 3) {
-            transportasi = bus;
+            transportasi = new Transportasi("Bus", "E 9101 DEF", 3500);
         } else {
             System.out.println("Pilihan tidak valid!");
-            System.exit(0); // Keluar dari program jika input tidak valid
+            System.exit(0);
         }
 
         // Menampilkan detail kendaraan yang dipilih
@@ -98,7 +89,7 @@ public class Transportasi {
             System.out.println("\nPemesanan Dibatalkan.");
         }
 
-        // Menutup scanner untuk mencegah kebocoran memori
+        // Menutup scanner
         scanner.close();
     }
 }
